@@ -42,7 +42,7 @@ export const registerUser = async (req, res) => {
 
 // login user
 
-export const loginUser = async () => {
+export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -61,9 +61,9 @@ export const loginUser = async () => {
             return res.status(401).json({ success: false, message: "Invalid credentials" })
         }
         const token = await jsonwebtoken.sign({ id: user._id }, process.env.JSONWEBTOKEN_SECRET, { expiresIn: "1h" })
-        res.status(200).json({ success: true, message: "User created successfully", data: { token, user } })
+        res.status(200).json({ success: true, message: "User get successfully", data: { token, user } })
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: "server error" })
+        // res.status(500).json({ success: false, message: "server error" })
     }
 }
