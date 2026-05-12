@@ -40,4 +40,30 @@ export const registerUser = async (req, res) => {
     }
 }
 
-// login 
+// login user
+
+export const loginUser = async () => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(401).json({ success: false, message: "All fields are required" })
+        }
+        // check user exist or not
+        const user = await User.findOne({ email })
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "No user found" })
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password)
+
+        if (!passwordMatch) {
+            return res.status(401).json({ success: false, message: "Invalid credentials" })
+        }
+        const token = await jsonwebtoken.sign({ id: user._id }, process.env.JSONWEBTOKEN_SECRET, { expiresIn: "1h" })
+        res.status(200).json({ success: true, message: "User created successfully", data: { token, user } })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "server error" })
+    }
+}
