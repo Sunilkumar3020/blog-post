@@ -5,7 +5,7 @@ import jsonwebtoken from "jsonwebtoken"
 
 export const registerUser = async (req, res) => {
     try {
-        const { name, email, password } = res.body;
+        const { name, email, password } = req.body;
 
         // check fields 
 
@@ -28,7 +28,7 @@ export const registerUser = async (req, res) => {
 
         // token generate
 
-        const token = jsonwebtoken.sign({ id: newUser._id }, process.env.JSONWEBTOKEN, { expiresIn: "1h" })
+        const token = jsonwebtoken.sign({ id: newUser._id }, process.env.JSONWEBTOKEN_SECRET, { expiresIn: "1h" })
 
         res.status(201).json({ success: true, message: "User created successfully", data: { token, newUser } })
 
@@ -39,3 +39,5 @@ export const registerUser = async (req, res) => {
         res.status(500).json({ success: false, message: "server error" })
     }
 }
+
+// login 
