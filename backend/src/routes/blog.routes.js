@@ -1,7 +1,8 @@
 import express from "express"
 import { createBlog, getAllBlogs } from "../controllers/blog.Controllers.js";
+import protect from "../middleware/authMiddleware.js";
 
 const router = express.Router()
-router.get('/', getAllBlogs)
-router.post('/', createBlog)
+router.post('/create', protect, createBlog)
+router.get('/all', getAllBlogs)
 export default router;
