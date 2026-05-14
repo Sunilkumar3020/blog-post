@@ -26,6 +26,7 @@ export default function Register() {
                 <input type="text" name="name" placeholder="name" value={formData.name} onChange={handleInputChange} />
                 <input type="email" name="email" placeholder="email" value={formData.email} onChange={handleInputChange} />
                 <input type="password" name="password" placeholder="password" value={formData.password} onChange={handleInputChange} />
+                <button type="submit">Register Now</button>
             </form>
         </>
     )
