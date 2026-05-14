@@ -1,3 +1,4 @@
+import { useState } from "react"
 import API from "../api/axios"
 
 
@@ -14,7 +15,7 @@ export default function Login() {
             [e.target.name]: e.target.value
         }))
     }
-    const handleInputChange = async e => {
+    const handleFormSubmit = async e => {
         e.preventDefault()
         try {
             const response = await API.post('/auth/login', formData)
@@ -25,7 +26,7 @@ export default function Login() {
     }
     return (
         <>
-            <form >
+            <form onSubmit={handleFormSubmit}>
                 <input type="email" name="email" placeholder="email" value={formData.name} onChange={handleInputChange} />
                 <input type="password" name="password" placeholder="password" value={formData.password} onChange={handleInputChange} />
                 <button type="submit"  >Login</button>
